@@ -1,0 +1,73 @@
+library(dplyr)library(sf)library(readr)library(RColorBrewer)library(classInt)
+setwd("~/Desktop/naniwa_mimamori")
+shape <- st_read("h27ka27111.shp")
+school <- read_csv("elementaryschool.csv")
+kenchiki <- read_csv("facilities201712.csv")
+crime <- read_csv("naniwa_crime.csv")
+str(crime)
+crime %>% filter(crime$YEAR="2015")
+crime %>% filter(crime$YEAR=="2015")
+crime2015 <- crime %>% filter(crime$YEAR=="2015")
+crime2015
+remove(crime2015)
+remove(crime)
+crime <- read_csv("naniwa_crime.csv")
+crime2015 <- crime %>% filter(crime$YEAR=="2015")
+data2015 <- left_join(shape, crime2015, by="MOJI")
+str(data2015)
+data2015$NUMBER
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data2015$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Reds"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data2015$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+data2015$NUMBER[is.na(data2015$NUMBER)]<-0
+data2015$NUMBER
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data2015$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Reds"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data2015$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+data <- left_join(shape, crime2015, by="MOJI")
+str(data)
+data$NUMBER[is.na(data$NUMBER)]<-0
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Reds"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Yellows"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Oranges"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"YlOrRd"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+crime2016 <- crime %>% filter(crime$YEAR=="2016")
+crime2016
+remove(data)
+data <- left_joi(shape, crime2016, by="MOJI")
+data <- left_join(shape, crime2016, by="MOJI")
+data$NUMBER[is.na(data$NUMBER)]<-0
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2016年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+crime2017 <- crime %>% filter(crime$YEAR=="2017")
+remove(data)
+data <- left_join(shape, crime2017, by="MOJI")
+data$NUMBER[is.na(data$NUMBER)]<-0
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2017年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+remove(data)
+remove(crime2016)
+crime2016 <- crime %>% filter(crime$YEAR=="2016")
+remove(data)
+data <- left_join(shape, crime2016, by="MOJI")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2016年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+remove(crime)
+crime <- read_csv("naniwa_crime.csv")
+remove(crime2016)
+crime2016 <- crime %>% filter(crime$YEAR=="2016")
+remove(data)
+data <- left_join(shape, crime2016, by="MOJI")
+data$NUMBER[is.na(data$NUMBER)]<-0
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2016年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2016年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+data$NUMBER
+data$MOJI
+remove(crime)
+crime <- read_csv("naniwa_crime.csv")
+remove(crime2016)
+remove(data)
+crime2016 <- crime %>% filter(crime$YEAR=="2016")
+data <- left_join(shape, crime2016, by="MOJI")
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2016年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+data$NUMBER[is.na(data$NUMBER)]<-0
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2016年")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+crimeAll <- read_csv("naniwa_crime20152017.csv")
+remove(data)
+data <- left_join(shape, crimeAll, by="MOJI")
+data$NUMBER[is.na(data$NUMBER)]<-0
+#地図　描画（これはe-Statにもとから人口が入っているシェープファイル）par(family="HiraKakuProN-W3")#地図と人口　描画col_km <- data$NUMBER %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015-2017年10月")text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)#小学校　描画points(school$X, school$Y, lwd=7, col="blue")text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)#検知器　描画points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
