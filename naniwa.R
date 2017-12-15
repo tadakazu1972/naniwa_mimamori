@@ -206,3 +206,36 @@ plot(data[4], col=col_km, main="浪速区　子ども犯罪 2015-2017年10月")
 text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)
 text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$NUMBER, cex=0.7)
 
+#小学校　描画
+points(school$X, school$Y, lwd=7, col="blue")
+text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)
+
+#検知器　描画
+points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
+
+###################################################################
+#女性被害　単年csvデータを読み込みで描画する場合
+women2015 <- read_csv("women2015.csv")
+
+#町丁目ごとに集計
+women2015sum <- women2015 %>% group_by(MOJI) %>% summarize(COUNT=n()) 
+
+#シェープファイルと結合
+data <- left_join(shape, women2015sum, by="MOJI")
+
+#色付けするためcountのNAを0変換
+data$COUNT[is.na(data$COUNT)]<-0
+
+#地図　描画
+par(family="HiraKakuProN-W3")
+col_km <- data$COUNT %>% classIntervals(.,n=8,style="kmeans") %>% findColours(.,pal=brewer.pal(8,"Purples"))
+plot(data[4], col=col_km, main="浪速区　女性被害 2015年")
+text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2], labels=data$MOJI, cex=0.5)
+text(st_coordinates(data %>% st_centroid)[,1], st_coordinates(data %>% st_centroid)[,2]-0.0007, labels=data$COUNT, cex=0.7)
+
+#小学校　描画
+points(school$X, school$Y, lwd=7, col="blue")
+text(school$X, school$Y+0.0007, labels=school$学校名, cex=1)
+
+#検知器　描画
+points(kenchiki$経度, kenchiki$緯度, pch=16, col="red")
